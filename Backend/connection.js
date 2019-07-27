@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 export default connectToDb = () => {
     
-    mongoose.connect('mongodb://heroku_31h15hl0:6rb13lp45ubdrm3qs5ildphn1l@ds351807.mlab.com:51807/heroku_31h15hl0');
+    mongoose.connect('mongodb://heroku_dzr1wfk8:2b39ff429gnsn0qmgaiiabha4u@ds345937.mlab.com:45937/heroku_dzr1wfk8');
 
     mongoose.connection.once('open', function(){
         console.log('Connection has been made.');

@@ -128,7 +128,7 @@ class TableList extends React.Component {
   render() {
     return (
       <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
+        {/* <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
               <h4 className={this.state.classes.cardTitleWhite}>Simple Table</h4>
@@ -151,7 +151,7 @@ class TableList extends React.Component {
               />
             </CardBody>
           </Card>
-        </GridItem>
+        </GridItem> */}
         <form>
             <div>
               <label>Reminder Name</label>

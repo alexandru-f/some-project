@@ -21,6 +21,7 @@ app.post("/new-user", (req, res) => {
         .then(result => res.send(result))
         .catch(err => res.send(err));
 });
+
  /*
     NEW REMINDER JSON
     {
@@ -29,11 +30,19 @@ app.post("/new-user", (req, res) => {
         "reminderName": "x"
     }
  */
+
+// TASKS 
+
+//  Claudiu : 
+//     frontend page  
+//  Alex: 
+//     get-ul pe types
+
 app.post("/new-reminder",  [
     // username must be an email
-    check('reminderName').isLength({min: 1}),
-    check('startDate').isEmpty(),
-    check('endDate').isEmpty(),
+    check('reminderName').isLength({ min: 1 }),
+    check('startDate').isLength({ min: 1 }),
+    check('endDate').isLength({ min: 1 }),
   ], async (req, res) => {
 
     const errors = validationResult(req);

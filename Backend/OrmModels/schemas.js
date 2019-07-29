@@ -5,22 +5,9 @@ const Schema = Mongoose.Schema;
 
 const ReminderItemSchema = new Schema({
     userID: String,
-    masina: [
+    reminders: [
         {
-            startDate: Date,
-            endDate: Date,
-            reminderName: String
-        }
-    ],
-    casa: [
-        {
-            startDate: Date,
-            endDate: Date,
-            reminderName: String
-        }
-    ],
-    others: [
-        {
+            reminderType: String,
             startDate: Date,
             endDate: Date,
             reminderName: String

@@ -19,12 +19,12 @@ connectDB();
 
 app.get("/reminders", (req, res) => {
   var param = req.query.type;
-  reminderModel.find({'userID' : '5d3c2d49a4915c3e58960292'}, function(err, items){
+  reminderModel.findOne({'userID' : '5d43298a0107fa1d249a01ab'}, function(err, items){
     if(err) {
       res.send(err);
     } else {
       var result_array = [];
-      items[0].reminders.find(function(element){
+      items.reminders.find(function(element){
         if(element.reminderType == param)
           result_array.push(element);
       })

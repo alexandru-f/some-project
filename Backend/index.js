@@ -5,6 +5,9 @@ const connectDB = require('./connection');
 const UserService = require('./Services/UserService');
 const ReminderService = require('./Services/ReminderService');
 const { check, validationResult } = require('express-validator');
+const Models = require('./OrmModels/models');
+
+const reminderModel = Models.reminderModel; 
 
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({extended: true}));
@@ -12,6 +15,23 @@ app.use(BodyParser.urlencoded({extended: true}));
 //Connect to DB
 connectDB();
 //End of Connect to DB
+
+
+app.get("/reminders", (req, res) => {
+  var param = req.query.type;
+  reminderModel.find({'userID' : '5d3c2d49a4915c3e58960292'}, function(err, items){
+    if(err) {
+      res.send(err);
+    } else {
+      var result_array = [];
+      items[0].reminders.find(function(element){
+        if(element.reminderType == param)
+          result_array.push(element);
+      })
+      res.send(result_array);
+    }
+  });
+});
 
 const registerNewUser = UserService.registerUser;
 const addNewReminder = ReminderService.addReminder;
@@ -38,6 +58,8 @@ app.post("/new-user", (req, res) => {
 //  Alex: 
 //     get-ul pe types
 
+
+
 app.post("/new-reminder",  [
     // username must be an email
     check('reminderName').isLength({ min: 1 }),
@@ -55,6 +77,8 @@ app.post("/new-reminder",  [
         .then(result => res.send(result))
         .catch(err => res.send(err));
 });
+
+
 
 
 // app.post('/user', [
@@ -80,3 +104,4 @@ app.post("/new-reminder",  [
 app.listen(8000, () => {
     console.log("Example app listening on port 8000");
 });
+

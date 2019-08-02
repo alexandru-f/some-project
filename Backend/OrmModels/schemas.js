@@ -1,5 +1,5 @@
-const Mongoose = require('mongoose');
-const Schema = Mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 
 
@@ -16,7 +16,7 @@ const ReminderItemSchema = new Schema({
 });
 
 const UserSchema = new Schema({
-    name: String
+    email: String
 });
 
 module.exports = {

@@ -1,12 +1,12 @@
-const Mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const Schemas = require('./schemas');
 
 const reminderSchema = Schemas.reminderSchema;
 const userSchema = Schemas.userSchema;
 
-const ReminderItemModel = Mongoose.model("reminderItem", reminderSchema);
+const ReminderItemModel = mongoose.model("reminderItem", reminderSchema);
 
-const UserModel = Mongoose.model("user", userSchema);
+const UserModel = mongoose.model("user", userSchema);
 
 module.exports = {
     reminderModel: ReminderItemModel,

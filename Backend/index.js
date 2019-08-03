@@ -4,6 +4,7 @@ const port = process.env.PORT || 8000;
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const reminderRoutes = require('./routes/reminders');
+const userRoutes = require('./routes/users');
 const mongoose = require('mongoose');
 
 //Connect to db 
@@ -28,7 +29,7 @@ app.use((req, res, next) => {
 
 //Routes which handle reminders requests (Post, Get, etc)
 app.use('/reminders', reminderRoutes);
-
+app.use('/user', userRoutes);
 
 app.use((req, res,next) => {
   const error = new Error("Not found");

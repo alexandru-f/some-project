@@ -1,5 +1,6 @@
 {
     "env": {
-        "MONGO_HEROKU_PW": "2b39ff429gnsn0qmgaiiabha4u"
+        "MONGO_HEROKU_PW": "2b39ff429gnsn0qmgaiiabha4u",
+        "JWT_KEY": "secret"
     }
 }

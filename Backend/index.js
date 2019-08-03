@@ -7,8 +7,8 @@ const reminderRoutes = require('./routes/reminders');
 const mongoose = require('mongoose');
 
 //Connect to db 
-mongoose.connect('mongodb://heroku_dzr1wfk8:2b39ff429gnsn0qmgaiiabha4u@ds345937.mlab.com:45937/heroku_dzr1wfk8', {
-
+mongoose.connect('mongodb://heroku_dzr1wfk8:' + process.env.MONGO_HEROKU_PW + '@ds345937.mlab.com:45937/heroku_dzr1wfk8', {
+  useNewUrlParser: true
 });
 
 app.use(morgan('dev'));

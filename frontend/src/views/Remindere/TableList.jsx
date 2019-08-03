@@ -67,11 +67,11 @@ class TableList extends React.Component {
     super(props);
     this.state = {
       classes: props,
-      reminderType: '',
+      reminderType: 'masina',
       reminderName: '',
       startDate: new Date(),
       endDate: new Date(),
-      UID: '5d3c2d49a4915c3e58960292'
+      UID: '5d43298a0107fa1d249a01ab'
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);

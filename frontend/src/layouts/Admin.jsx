@@ -62,7 +62,8 @@ class Dashboard extends React.Component {
     color: "blue",
     hasImage: true,
     fixedClasses: "dropdown",
-    mobileOpen: false
+    mobileOpen: false,
+    authentificated: false
   };
   mainPanel = React.createRef();
   handleImageClick = image => {
@@ -94,6 +95,10 @@ class Dashboard extends React.Component {
       ps = new PerfectScrollbar(this.mainPanel.current);
     }
     window.addEventListener("resize", this.resizeFunction);
+    const jwt = localStorage.getItem('cool-jwt');
+    if(!jwt) {
+      this.props.history.push('/login');
+    }
   }
   componentDidUpdate(e) {
     if (e.history.location.pathname !== e.location.pathname) {

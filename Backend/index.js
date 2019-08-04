@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const reminderRoutes = require('./routes/reminders');
 const userRoutes = require('./routes/users');
 const mongoose = require('mongoose');
+const checkAuth = require('./middleware/check-auth');
 
 //Connect to db 
 mongoose.connect('mongodb://heroku_dzr1wfk8:' + process.env.MONGO_HEROKU_PW + '@ds345937.mlab.com:45937/heroku_dzr1wfk8', {
@@ -26,6 +27,9 @@ app.use((req, res, next) => {
   next(); 
 });
 
+app.get('/', checkAuth, function(req, res) {
+  res.sendStatus(200);
+});
 
 //Routes which handle reminders requests (Post, Get, etc)
 app.use('/reminders', reminderRoutes);

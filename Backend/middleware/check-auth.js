@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
         req.userData = decoded;
         next();
     } catch(err) {
-        return res.status(401).json({
+        return res.sendStatus(401).json({
             message: "Autentificarea a esuat"
         });
     }

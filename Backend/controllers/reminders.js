@@ -2,7 +2,7 @@ const Reminder = require('../models/reminder');
 
 exports.get_all_reminders = (req, res, next) => {
     const userID = "1";
-
+    console.log("userdata: " + req.userData);
     Reminder.findOne({'userID': userID})
         .select('reminders.name reminders.type reminders._id reminders.startDate reminders.endDate')
         .exec()

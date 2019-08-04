@@ -5,6 +5,7 @@ const checkAuth = require('../middleware/check-auth');
 const Reminder = require('../models/reminder');
 
 const  RemindersController = require("../controllers/reminders");
+
 // Get all reminders from user
 router.get("/", checkAuth,  RemindersController.get_all_reminders);
 

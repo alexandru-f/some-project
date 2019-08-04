@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const User = require("../models/user");
+const Reminder = require("../models/reminder");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -32,6 +33,8 @@ router.post("/register", (req, res, next) => {
                 .save()
                 .then(result => {
                     console.log(result);
+                    var reminderItem = new Reminder({_id: new mongoose.Types.ObjectId(), userID: result._id});
+                    reminderItem.save();
                     res.status(201).json({
                         message: "Userul a fost creat"
                     });

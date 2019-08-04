@@ -1,17 +1,17 @@
 const Reminder = require('../models/reminder');
 
 exports.get_all_reminders = (req, res, next) => {
-    const userID = "1";
-
+    const userID = req.userData.userId;
+    
     Reminder.findOne({'userID': userID})
         .select('reminders.name reminders.type reminders._id reminders.startDate reminders.endDate')
         .exec()
         .then(docs => {
             const reminders = docs.reminders;
-            
             if (reminders.length > 0){
                 const response = {
                     count: reminders.length,
+                    userData: req.userData.email,
                     reminders: reminders.map(reminder => {
                         return {
                             _id: reminder._id,

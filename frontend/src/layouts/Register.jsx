@@ -14,6 +14,8 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardAvatar from "components/Card/CardAvatar.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
+import Danger from "components/Typography/Danger.jsx";
+import SimpleReactValidator from 'simple-react-validator';
 
 class Login extends React.Component {
     constructor(props) {
@@ -22,9 +24,13 @@ class Login extends React.Component {
         this.state = {
             classes: props,
             email: '',
-            password: ''
+            password: '',
+            errors: {
+                email: '',
+                password: ''
+            }
         }
-
+        this.validator = new SimpleReactValidator();
         this.inputChange = this.inputChange.bind(this);
         this.onLogin = this.onLogin.bind(this);
     }
@@ -32,17 +38,22 @@ class Login extends React.Component {
     inputChange(e) {
         this.setState({
             [e.target.name]: e.target.value
-        })
+        });
+        this.validator.showMessageFor(e.target.name);
     }
 
     onLogin(e) {
         e.preventDefault();
-        axios.post('http://localhost:8000/user/register', {
-            email: this.state.email,
-            password: this.state.password
-        }).then(res => {
-            this.props.history.push('/login');
-        });
+        if (this.validator.allValid()) {
+            axios.post('http://localhost:8000/user/register', {
+                email: this.state.email,
+                password: this.state.password
+            }).then(res => {
+                this.props.history.push('/login');
+            });    
+        } else {
+            this.validator.showMessages();
+        }
     }
 
     render(){
@@ -70,6 +81,7 @@ class Login extends React.Component {
                                         onChange: this.inputChange
                                     }}
                                 />
+                                {this.validator.message('email', this.state.email, 'required|email')}
                             </GridItem>
                         </GridContainer>
                         <GridContainer>
@@ -86,8 +98,8 @@ class Login extends React.Component {
                                         value: this.state.password,
                                         onChange: this.inputChange
                                     }}
-                                    
                                 />
+                                {this.validator.message('password', this.state.password, 'required|min:6')}
                             </GridItem>
                         </GridContainer>
                     </CardBody>

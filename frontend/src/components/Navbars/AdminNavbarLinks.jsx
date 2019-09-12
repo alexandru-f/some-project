@@ -39,8 +39,14 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
+import { withRouter } from "react-router-dom";
 
 class AdminNavbarLinks extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleLogout = this.handleLogout.bind(this);
+  }
   state = {
     openNotifcation: false,
     openProfile: false
@@ -63,6 +69,11 @@ class AdminNavbarLinks extends React.Component {
     }
     this.setState({ openProfile: false });
   };
+
+  handleLogout = () => {
+    localStorage.removeItem('cool-jwt');
+    this.props.history.push('/login');
+  }
   render() {
     const { classes } = this.props;
     const { openNotifcation, openProfile } = this.state;
@@ -232,7 +243,7 @@ class AdminNavbarLinks extends React.Component {
                       </MenuItem>
                       <Divider light />
                       <MenuItem
-                        onClick={this.handleCloseProfile}
+                        onClick={this.handleLogout}
                         className={classes.dropdownItem}
                       >
                         Logout
@@ -253,4 +264,4 @@ AdminNavbarLinks.propTypes = {
   classes: PropTypes.object
 };
 
-export default withStyles(headerLinksStyle)(AdminNavbarLinks);
+export default withRouter(withStyles(headerLinksStyle)(AdminNavbarLinks));

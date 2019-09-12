@@ -28,7 +28,8 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import DatePicker from "react-datepicker";
- 
+import axios from "axios";
+
 import "react-datepicker/dist/react-datepicker.css";
 
 const styles = {
@@ -116,7 +117,7 @@ class TableList extends React.Component {
 
     console.log(formData);
     
-    fetch('/new-reminder', {
+    axios('/new-reminder', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

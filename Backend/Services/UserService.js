@@ -14,6 +14,11 @@ async function registerNewUser(user) {
     return result;
 }
 
+// async function loginUser(credentials) {
+//     userModel.find().exec();
+// }
+
 module.exports = {
-    registerUser: registerNewUser
+    registerUser: registerNewUser,
+    // loginUser: loginUser
 }

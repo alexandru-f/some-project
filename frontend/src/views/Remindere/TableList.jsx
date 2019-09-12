@@ -120,7 +120,7 @@ class TableList extends React.Component {
     axios.post('http://localhost:8000/reminders', JSON.stringify(formData), {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNsYXVkaXUucGFsYWxhZUBnbWFpbC5jb20iLCJ1c2VySWQiOiI1ZDdhMWJmYWI4YTZiOTJlYWNiM2RlYWUiLCJpYXQiOjE1NjgyODM3MTF9.ysCGtIu9Lbvqg0oKRafLTGxplKrmO8eQHCg2KhcIem0'
+        'Authorization': 'Bearer ' + localStorage.getItem('cool-jwt')
       }
     }).then( res => {
       console.log('ok');
@@ -200,11 +200,6 @@ class TableList extends React.Component {
                 onChange={this.handleEndDateChange} 
               />
             </div>
-            <input 
-              type="string" 
-              name="UID" 
-              value={this.state.UID} 
-            />
             <div>
               <input 
                 type="submit" 

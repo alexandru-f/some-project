@@ -3,13 +3,26 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Reminder = require('../models/reminder');
+const { Validator } = require('node-input-validator');
+
 exports.register_user = (req, res, next) => {
+
+    const validator = new Validator(req.body, {
+        email: 'required|email',
+        password: "required|between:6,30"
+    });
+
+    validator.check().then((matched) => {
+        if (!matched) {
+            res.status(422).send(validator.errors);
+        }
+    });
     User.find({email: req.body.email})
     .exec()
     .then(user => {
         if (user.length >= 1) {
             return res.status(409).json({
-                message: "Email-ul este deja folosit"
+                message: "E-mail is already used"
             });
         } else {
             bcrypt.hash(req.body.password, 10, (err, hash) => {
@@ -31,11 +44,10 @@ exports.register_user = (req, res, next) => {
                     var reminderItem = new Reminder({_id: new mongoose.Types.ObjectId(), userID: result._id});
                     reminderItem.save();
                     res.status(201).json({
-                        message: "Userul a fost creat"
+                        message: "User has been successfully created"
                     });
                 })
                 .catch(err => {
-                    console.log(err);
                     res.status(500).json({
                         error: err
                     });

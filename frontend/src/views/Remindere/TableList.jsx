@@ -108,8 +108,8 @@ class TableList extends React.Component {
     event.preventDefault();
   
     const formData = {
-      "reminderName": this.state.reminderName,
-      "reminderType": this.state.reminderType,
+      "name": this.state.reminderName,
+      "type": this.state.reminderType,
       "UID": this.state.UID,
       "startDate": this.state.startDate,
       "endDate": this.state.endDate
@@ -117,12 +117,15 @@ class TableList extends React.Component {
 
     console.log(formData);
     
-    axios('/new-reminder', {
-      method: 'POST',
+    axios.post('http://localhost:8000/reminders', JSON.stringify(formData), {
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNsYXVkaXUucGFsYWxhZUBnbWFpbC5jb20iLCJ1c2VySWQiOiI1ZDdhMWJmYWI4YTZiOTJlYWNiM2RlYWUiLCJpYXQiOjE1NjgyODM3MTF9.ysCGtIu9Lbvqg0oKRafLTGxplKrmO8eQHCg2KhcIem0'
+      }
+    }).then( res => {
+      console.log('ok');
+    }).catch(err => {
+      console.log(err);
     });
   }
 

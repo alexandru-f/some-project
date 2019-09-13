@@ -9,14 +9,15 @@ exports.register_user = (req, res, next) => {
 
     const validator = new Validator(req.body, {
         email: 'required|email',
-        password: "required|between:6,30"
+        password: 'required|lengthBetween:6,30'
     });
 
     validator.check().then((matched) => {
         if (!matched) {
-            res.status(422).send(validator.errors);
+            return res.status(422).send(validator.errors);
         }
     });
+
     User.find({email: req.body.email})
     .exec()
     .then(user => {

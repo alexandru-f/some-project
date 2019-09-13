@@ -37,7 +37,11 @@ class Login extends React.Component {
 
     inputChange(e) {
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
+            errors: {
+                email: '',
+                password: ''
+            }            
         });
         this.validator.showMessageFor(e.target.name);
     }
@@ -50,9 +54,15 @@ class Login extends React.Component {
                 password: this.state.password
             }).then(res => {
                 this.props.history.push('/login');
+            }).catch(err => {
+                console.log(this.state.errors);
+                let errorss = {...this.state.errors, ...err.response.data};
+                this.setState({errors: errorss});
+                console.log(this.state.errors);
             });    
         } else {
             this.validator.showMessages();
+            this.forceUpdate();
         }
     }
 
@@ -82,6 +92,7 @@ class Login extends React.Component {
                                     }}
                                 />
                                 {this.validator.message('email', this.state.email, 'required|email')}
+                                {!this.state.errors.email.length && this.state.errors.email.message}
                             </GridItem>
                         </GridContainer>
                         <GridContainer>
@@ -100,6 +111,7 @@ class Login extends React.Component {
                                     }}
                                 />
                                 {this.validator.message('password', this.state.password, 'required|min:6')}
+                                {!this.state.errors.password.length && this.state.errors.password.message}
                             </GridItem>
                         </GridContainer>
                     </CardBody>

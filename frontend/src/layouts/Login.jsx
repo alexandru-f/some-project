@@ -24,7 +24,12 @@ class Login extends React.Component {
         this.state = {
             classes: props,
             email: '',
-            password: ''
+            password: '',
+            errors: {
+                email: '',
+                password: '',
+                other: '',
+            }
         }
         
         this.validator = new SimpleReactValidator();
@@ -49,10 +54,12 @@ class Login extends React.Component {
                 localStorage.setItem('cool-jwt', res.data.token);
                 this.props.history.push('/admin');
             }).catch(err => {
-                console.log(err);
+                let errorss = {...this.state.errors, ...err.response.data};
+                this.setState({errors: errorss});
             });
         } else {
             this.validator.showMessages();
+            this.forceUpdate();
         }
     }
 
@@ -82,7 +89,8 @@ class Login extends React.Component {
                                     }}
                                 />
                                 {this.validator.message('email', this.state.email, 'required')}
-                            </GridItem>
+                                {!this.state.errors.email.length && this.state.errors.email.message}
+                                </GridItem>
                         </GridContainer>
                         <GridContainer>
                             <GridItem xs={12} sm={12} md={12}>
@@ -100,10 +108,13 @@ class Login extends React.Component {
                                     }}
                                 />
                                 {this.validator.message('password', this.state.password, 'required')}
+                                {!this.state.errors.password.length && this.state.errors.password.message}
+                                {!this.state.errors.other.length && this.state.errors.other.message}    
                             </GridItem>
                         </GridContainer>
                     </CardBody>
                     <CardFooter>
+                        
                         <Button type="submit" color="primary">Login</Button>
                         <Link to="/register">Register</Link>
                         

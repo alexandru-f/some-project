@@ -28,7 +28,8 @@ exports.get_all_reminders = (req, res, next) => {
                 res.status(200).json(response);
             }
             else 
-                res.status(404).json({
+                res.status(202).json({
+                    reminders: [],
                     message: 'No reminders found for provided userID'
                 })
         })

@@ -96,13 +96,14 @@ h3 {
 
 h4 {
   font-size: 1.3em;
-  line-height: 1.4em;
+  line-height: 1;
+  margin-bottom: 0;
 }
 
 h5 {
   font-size: 1.25em;
   line-height: 1.4em;
-  margin-bottom: 15px;
+  margin-bottom: 0;
 }
 
 h6 {
@@ -508,4 +509,23 @@ footer ul li a:hover {
 }
 * {
   letter-spacing: normal !important;
+}
+.CardHeader-cardHeader-359.CardHeader-primaryCardHeader-367 {
+  display: flex;
+  justify-content: space-between;
+}
+
+button.MuiButtonBase-root.MuiButton-root.RegularButton-button-148.square-button.MuiButton-text {
+  padding: 0;
+  background-color: transparent;
+  color: white;
+  align-items: center;
+}
+
+button.MuiButtonBase-root.MuiButton-root.RegularButton-button-148.square-button.MuiButton-text i {
+  font-size: 30px;
+}
+
+.MuiFormControl-root {
+  width: 100%;
 }

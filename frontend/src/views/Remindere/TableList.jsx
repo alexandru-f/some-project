@@ -34,9 +34,11 @@ import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import Moment from "react-moment";
 import CustomInput from "components/CustomInput/CustomInput";
-import { Select, MenuItem } from "@material-ui/core";
+import { Select, MenuItem, FormControl, InputLabel, TextField } from "@material-ui/core";
 import { tsMethodSignature } from "@babel/types";
 import Modal from 'react-modal';
+import Button from "components/CustomButtons/Button";
+import { makeStyles } from "@material-ui/styles";
 
 const styles = {
   cardCategoryWhite: {
@@ -81,18 +83,40 @@ const customStyles = {
   }
 };
 
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  }
+}));
+
 class TableList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       classes: props,
-      reminderType: 'masina',
+      reminderType: '',
       reminderName: '',
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: '',
+      endDate: '',
       UID: '',
       reminders: [],
-      modalIsOpen: false
+      modalIsOpen: false,
+      setLabelWidth: 0,
+      labelWidth: 0,
+      inputLabel: null
     }
 
     this.openModal = this.openModal.bind(this);
@@ -105,8 +129,10 @@ class TableList extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
+    
+    
   }
-
+  
   openModal() {
     this.setState({modalIsOpen: true});
   }
@@ -147,13 +173,16 @@ class TableList extends React.Component {
     });
     this.getReminders();
   }
-  
+
+  handleChange(event) {
+    this.setAge(event.target.value);
+  };
 
   handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-
+    console.log(name);
     this.setState({
       [name]: value
     });
@@ -191,6 +220,7 @@ class TableList extends React.Component {
       }
     }).then( res => {
       this.getReminders();
+      this.closeModal();
     }).catch(err => {
       console.log(err);
     });
@@ -212,7 +242,9 @@ class TableList extends React.Component {
 
   editReminder (reminderID) {
     console.log('Selected Reminder ID: ' + reminderID);
-  }
+  };
+
+  
 
   render() {
     return (
@@ -231,8 +263,9 @@ class TableList extends React.Component {
               </CardHeader>
               <CardBody>
                 <form>
-                  <div>
-                    <CustomInput
+                <GridContainer>
+                  <GridItem xs={12} sm={3} md={3}>
+                    {/* <CustomInput
                       labelText="Nume reminder"
                       id="reminder-name"
                       formControlProps={{
@@ -243,51 +276,66 @@ class TableList extends React.Component {
                         value:this.state.reminderName,
                         onChange:this.handleInputChange
                       }}
-                    />
-                  </div>
-                  
-                  <div>
-                    <Select
-                      value={this.state.reminderType}
-                      onChange={this.handleInputChange}
-                      inputProps={{
-                        name: 'reminder-type',
-                        id: 'reminder-type',
+                    /> */}
+                    <TextField
+                      id="standard-basic"
+                      className={useStyles.textField}
+                      label="Standard"
+                      labelText="Nume reminder"
+                      formControlProps={{
+                          fullWidth: false
                       }}
-                    >
-                      <MenuItem value={'masina'}>Masina</MenuItem>
-                      <MenuItem value={'casa'}>Casa</MenuItem>
-                      <MenuItem value={'altele'}>Altele</MenuItem>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label>Start Date</label>
-                    <DatePicker 
-                      type="text" 
-                      name="startDate" 
-                      selected={this.state.startDate} 
-                      dateFormat="MM/dd/yyyy"
-                      onChange={this.handleStartDateChange} />
-                  </div>
-
-                  <div>
-                    <label>End Date</label>
-                    <DatePicker 
-                      type="text" 
-                      name="endDate"
-                      selected={this.state.endDate} 
-                      dateFormat="MM/dd/yyyy"
-                      onChange={this.handleEndDateChange} 
+                      inputProps={{
+                        name:"reminderName",
+                        value:this.state.reminderName,
+                        onChange:this.handleInputChange
+                      }}
                     />
-                  </div>
-                  <div>
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3}>
+                    <FormControl className={useStyles.formControl}>
+                      <InputLabel id="demo-simple-select-helper-label">Tip</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        value={this.state.reminderType}
+                        inputProps={{
+                          name: 'reminderType',
+                          id: 'reminder-type',
+                        }}
+                        onChange={this.handleInputChange}
+                      >
+                        <MenuItem value={'masina'}>Masina</MenuItem>
+                        <MenuItem value={'casa'}>Casa</MenuItem>
+                        <MenuItem value={'altele'}>Altele</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3}>
+                    <label>Start Date</label>
+                      <DatePicker 
+                        type="text" 
+                        name="startDate" 
+                        selected={this.state.startDate} 
+                        dateFormat="MM/dd/yyyy"
+                        onChange={this.handleStartDateChange} />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3}>
+                    <label>End Date</label>
+                      <DatePicker 
+                        type="text" 
+                        name="endDate"
+                        selected={this.state.endDate} 
+                        dateFormat="MM/dd/yyyy"
+                        onChange={this.handleEndDateChange} 
+                      />
+                  </GridItem>
                     <input 
                       type="submit" 
                       value="Trimite" 
                       onClick={this.handleSubmit}
                     />
-                  </div>
+                </GridContainer>
                 </form>
               </CardBody>
             </Card>
@@ -298,9 +346,9 @@ class TableList extends React.Component {
           <Card>
             <CardHeader color="primary">
               <h4 className={this.state.classes.cardTitleWhite}>Remindere</h4>
+              <Button className="square-button" onClick={this.openModal}><i className="fas fa-calendar-plus"></i></Button>
             </CardHeader>
             <CardBody>
-            <button onClick={this.openModal}>Open Modal</button>
               {this.state.reminders.length ? <Table
                 tableHeaderColor="primary"
                 tableHead={["Nume", "Tip", "Start Date", "End Date", "Actiuni"]}
